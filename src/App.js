@@ -2,25 +2,22 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import axios from 'axios';
+
+const usePromiseAll = async (url1, url2) => {
+	const req1 = axios.get(url1);
+	const req2 = axios.get(url2);
+	return await Promise.all([req1, req2]);
+}
+
+const App = () => {
+	const promise = usePromiseAll('https://api.nasa.gov/planetary/apod', 'https://api.nasa.gov/planetary/apod')
+	console.log('runs first');
+	promise
+		.then(response => console.log('runs when resolved', response))
+	return (<>
+		<h1>Ok</h1>
+	</>)
 }
 
 export default App;
